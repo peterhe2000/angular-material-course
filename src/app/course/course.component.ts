@@ -1,12 +1,15 @@
 import {
   AfterViewInit,
   Component,
-  OnInit
+  OnInit,
+  ViewChild
 } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
+import { startWith } from 'rxjs/operators';
 import { Course } from '../model/course';
 import { CoursesService } from '../services/courses.service';
+import { LessonsDataSource } from '../services/lessons.datasource';
 
 @Component({
   selector: 'course',
@@ -16,8 +19,11 @@ import { CoursesService } from '../services/courses.service';
 export class CourseComponent implements OnInit, AfterViewInit {
 
   course: Course;
-  dataSource = new MatTableDataSource([]);
+  dataSource: LessonsDataSource;
   displayedColumns = ['seqNo', 'description', 'duration'];
+
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator;
 
   constructor(private route: ActivatedRoute,
               private coursesService: CoursesService) {
@@ -25,18 +31,20 @@ export class CourseComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
     this.course = this.route.snapshot.data['course'];
-    this.coursesService.findAllCourseLessons(this.course.id)
-      .subscribe(lessons => this.dataSource.data = lessons);
-  }
-
-  searchLessons(search = '') {
-    this.dataSource.filter = search.toLowerCase().trim();
+    this.dataSource = new LessonsDataSource(this.coursesService);
   }
 
   ngAfterViewInit() {
-
+    this.paginator.page.pipe(
+      startWith(null),
+    ).subscribe(() => {
+      this.dataSource.loadLessons(
+        this.course.id,
+        '',
+        'asc',
+        this.paginator.pageIndex,
+        this.paginator.pageSize);
+    });
   }
-
 }
