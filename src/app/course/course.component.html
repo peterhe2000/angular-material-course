@@ -11,13 +11,20 @@
       #input
     />
   </mat-form-field>
-<div class="spinner-container" *ngIf="dataSource.loading$ | async">
-  <mat-spinner></mat-spinner>
-</div>
+  <div class="spinner-container"
+    *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
   <mat-table class="lessons-table mat-elevation-z8"
-    [dataSource]="dataSource">
+    [dataSource]="dataSource"
+    matSort
+    matSortActive="seqNo"
+    matSortDirection="asc"
+    matSortDisableClear>
     <ng-container matColumnDef="seqNo">
-      <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef
+        mat-sort-header>#
+      </mat-header-cell>
       <mat-cell *matCellDef="let lesson">{{lesson.seqNo}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="description">
