@@ -1,0 +1,34 @@
+@use '~@angular/material/core/theming/palette';
+
+$custom-palette: (
+  50: #e8f5e9,
+  100: #c8e6c9,
+  200: #a5d6a7,
+  300: #81c784,
+  400: #66bb6a,
+  500: #4caf50,
+  600: #43a047,
+  700: #388e3c,
+  800: #2e7d32,
+  900: #1b5e20,
+  A100: #b9f6ca,
+  A200: #69f0ae,
+  A400: #00e676,
+  A700: #00c853,
+  contrast: (
+    50: palette.$dark-primary-text,
+    100: palette.$dark-primary-text,
+    200: palette.$dark-primary-text,
+    300: palette.$dark-primary-text,
+    400: palette.$dark-primary-text,
+    500: palette.$dark-primary-text,
+    600: palette.$light-primary-text,
+    700: palette.$light-primary-text,
+    800: palette.$light-primary-text,
+    900: palette.$light-primary-text,
+    A100: palette.$dark-primary-text,
+    A200: palette.$dark-primary-text,
+    A400: palette.$dark-primary-text,
+    A700: palette.$dark-primary-text,
+  )
+);
